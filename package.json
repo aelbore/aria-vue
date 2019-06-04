@@ -1,0 +1,29 @@
+{
+  "name": "aria-vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "ts-node build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aelbore/aria-vue.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aelbore/aria-vue/issues"
+  },
+  "homepage": "https://github.com/aelbore/aria-vue#readme",
+  "devDependencies": {
+    "typescript": "^3.5.1"
+  },
+  "dependencies": {
+    "aria-build": "^0.0.3",
+    "aria-test": "^0.0.1",
+    "vue-template-compiler": "2.6.10",
+    "rollup-plugin-vue": "^5.0.0"
+  }
+}
