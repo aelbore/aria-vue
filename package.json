@@ -1,6 +1,6 @@
 {
   "name": "aria-vue",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "typescript": "^3.5.1"
   },
   "dependencies": {
-    "aria-build": "^0.0.3",
+    "aria-build": "^0.0.5",
     "aria-test": "^0.0.1",
     "vue-template-compiler": "2.6.10",
     "rollup-plugin-vue": "^5.0.0"
