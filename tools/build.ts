@@ -1,8 +1,8 @@
 import { bundle, clean } from 'aria-build'
 
 (async function() {
-  const options = await import('./config').then(config => config.default)
+  const options = await import('./config')
 
   await clean('dist')
-  await bundle(options)
+  await bundle(options.default)
 })()
