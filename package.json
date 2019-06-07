@@ -1,8 +1,8 @@
 {
   "name": "aria-vue",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "aria-vue.js",
   "scripts": {
     "build": "ts-node tools/build"
   },
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "aria-build": "^0.0.5",
-    "aria-test": "^0.0.2",
+    "aria-test": "^0.0.3",
     "vue-template-compiler": "2.6.10",
     "rollup-plugin-vue": "^5.0.0"
   }
