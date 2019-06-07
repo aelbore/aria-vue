@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "aria-build": "^0.0.5",
-    "aria-test": "^0.0.1",
+    "aria-test": "^0.0.2",
     "vue-template-compiler": "2.6.10",
     "rollup-plugin-vue": "^5.0.0"
   }
