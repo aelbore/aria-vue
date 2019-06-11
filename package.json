@@ -10,8 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/aelbore/aria-vue.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "unit-test",
+    "test",
+    "karma",
+    "vue",
+    "mocha",
+    "chai",
+    "rollup",
+    "typescript"
+  ],
+  "author": "Arjay Elbore",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/aelbore/aria-vue/issues"
