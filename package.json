@@ -4,7 +4,7 @@
   "description": "",
   "main": "aria-vue.js",
   "scripts": {
-    "build": "ts-node tools/build"
+    "build": "aria-build -d --external aria-build"
   },
   "repository": {
     "type": "git",
