@@ -1,8 +1,5 @@
 import { TSRollupConfig, rollupBuild, createTSRollupConfig, replacePlugin } from 'aria-build'
-
-const vue = require('rollup-plugin-vue')
-
-export { vue }
+import { vue } from './libs'
 
 export function build(options: TSRollupConfig | Array<TSRollupConfig>) {
   const configs = Array.isArray(options) ? options: [ options ]
@@ -11,7 +8,10 @@ export function build(options: TSRollupConfig | Array<TSRollupConfig>) {
     opts.inputOptions.plugins = [
       ...opts.inputOptions.plugins,
       vue(),
-      replacePlugin({ ...(config.replace ?? {}) })
+      replacePlugin({ 
+        'process.env.NODE_ENV': JSON.stringify('development'),
+        ...(config.replace ?? {}) 
+      })
     ]
     return rollupBuild(opts)
   }))
