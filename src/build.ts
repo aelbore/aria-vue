@@ -2,6 +2,8 @@ import { TSRollupConfig, rollupBuild, createTSRollupConfig, replacePlugin } from
 
 const vue = require('rollup-plugin-vue')
 
+export { vue }
+
 export function build(options: TSRollupConfig | Array<TSRollupConfig>) {
   const configs = Array.isArray(options) ? options: [ options ]
   return Promise.all(configs.map(config => {
@@ -11,6 +13,6 @@ export function build(options: TSRollupConfig | Array<TSRollupConfig>) {
       vue(),
       replacePlugin({ ...(config.replace ?? {}) })
     ]
-    return rollupBuild(createTSRollupConfig(config))
+    return rollupBuild(opts)
   }))
 }
