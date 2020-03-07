@@ -10,6 +10,7 @@ export function build(options: TSRollupConfig | Array<TSRollupConfig>) {
       vue(),
       replacePlugin({ 
         'process.env.NODE_ENV': JSON.stringify('development'),
+        'process.env.VUE_ENV': JSON.stringify('browser'),
         ...(config.replace ?? {}) 
       })
     ]
