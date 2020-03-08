@@ -1,9 +1,18 @@
-import { TestAriaConfigOptions, createTSRollupConfig } from 'aria-build'
+import { TestAriaConfigOptions, replacePlugin } from 'aria-build'
 import { vue } from './libs'
 
-export function test() {
+import json from '@rollup/plugin-json'
+
+export function test(config?: TestAriaConfigOptions) {
   const opts: TestAriaConfigOptions = {
-    plugins: [ vue() ],
+    plugins: [ 
+      vue(),
+      json(),
+      replacePlugin({ 
+        'process.env.NODE_ENV': JSON.stringify('development'),
+        'process.env.VUE_ENV': JSON.stringify('browser')
+      })
+    ],
     output: {
       globals: {
         'vue': 'Vue',
