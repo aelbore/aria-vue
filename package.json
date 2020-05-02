@@ -27,16 +27,16 @@
   },
   "homepage": "https://github.com/aelbore/aria-vue#readme",
   "peerDependencies": {
-    "aria-build": "> ^0.2.0",
-    "aria-fs": "> ^0.2.0",
-    "aria-mocha": "> ^0.2.0",
-    "aria-mocha-headless": "> ^0.2.0"
+    "aria-fs": ">= ^0.3.0",
+    "aria-build": ">= ^0.3.0",
+    "aria-mocha": ">= ^0.3.0",
+    "aria-mocha-headless": ">= ^0.3.0"
   },
   "devDependencies": {
-    "aria-build": "^0.2.2",
-    "aria-fs": "^0.2.2",
-    "aria-mocha":"^0.2.2",
-    "aria-mocha-headless": "^0.2.2",
+    "aria-build": "^0.3.0",
+    "aria-fs": "^0.3.0",
+    "aria-mocha":"^0.3.0",
+    "aria-mocha-headless": "^0.3.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
