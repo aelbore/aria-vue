@@ -12,8 +12,8 @@ export function getPlugins(opts?: VueAriaConfigOptions) {
     vue(),
     json(),
     replacePlugin({ 
-      'process.env.NODE_ENV': JSON.stringify(opts?.mode ?? 'development'),
-      'process.env.VUE_ENV': JSON.stringify('browser')
+      'process.env.NODE_ENV': '"production"',
+      __DEV__: 'false'
     })
   ]
 }
