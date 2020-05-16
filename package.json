@@ -37,7 +37,7 @@
     "aria-fs": "^0.3.0",
     "aria-mocha":"^0.3.0",
     "aria-mocha-headless": "^0.3.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.2"
   },
   "dependencies": {
     "@vue/test-utils": "^1.0.2",
