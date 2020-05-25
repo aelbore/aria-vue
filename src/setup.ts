@@ -17,7 +17,7 @@ beforeEach(() => {
   document.body.appendChild(root)
 })
 
-const DataTestIdPlugin = (wrapper) => {
+function DataTestIdPlugin(wrapper) {
   function findByTestId(selector) {
     const dataSelector = `[data-testid='${selector}']`
     const element = wrapper.element.querySelector(dataSelector)
@@ -54,7 +54,7 @@ async function getSpecsToRun(dir?: string) {
   return specs
 }
 
-export async function setup() {  
+async function setup() {  
   /// @ts-ignore
   config.plugins.VueWrapper.install(DataTestIdPlugin)
 
@@ -63,7 +63,7 @@ export async function setup() {
 
   const specsNames = async () =>  {
     const specs = await getSpecsToRun()
-    return specs.map(specName => import(`/${specName}`))
+    return specs.map(specName => import(`../../${specName}`))
   }
 
   const specs = await specsNames()
@@ -77,5 +77,4 @@ export async function setup() {
   return { run }
 }
 
-setup()
-  .then(s => s.run())
+setup().then(s => s.run())
