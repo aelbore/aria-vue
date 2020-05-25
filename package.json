@@ -4,7 +4,7 @@
   "description": "",
   "main": "aria-vue.js",
   "scripts": {
-    "build": "aria-build -d -f es"
+    "build": "ts-node --project ./tools/tsconfig.json ./tools/build.ts"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "koa-router": "8.0.8"
   },
   "devDependencies": {
+    "@types/koa-router": "7.4.1",
     "aria-build": "^0.3.0",
     "aria-fs": "^0.3.0",
     "aria-mocha":"^0.3.0",

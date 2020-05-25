@@ -76,3 +76,6 @@ export async function setup() {
 
   return { run }
 }
+
+setup()
+  .then(s => s.run())

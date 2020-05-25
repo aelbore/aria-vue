@@ -1,21 +1,38 @@
+import { getTestFiles, launch } from 'aria-mocha'
 
 export interface ServerOptions {
   port?: number
-  files?: string[]
+  hostname?: string
+  testRootFolder?: string
 }
 
+async function serverConfigPlugin(root: string) {
+  const Router = await import('koa-router')
+  const router = new Router()
 
-function serverConfigPlugin(files?: string) {
-
-  return function getTestFilesPlugin({ app }) {
-
+  return ({ app }) => {
+    router.get('/test-files', async (ctx, next) => {
+      ctx.body = await getTestFiles(`${root}/**/*.spec.js`, true)
+      return next()
+    })
+  
+    app.use(router.routes())
   }
-
-  
 }
 
-async function startServer(options?: ServerOptions) {
+export async function startServer(options: ServerOptions = {
+  port: 3000,
+  hostname: 'localhost',
+  testRootFolder: 'test'
+}) {
+  const { port, hostname, testRootFolder } = options
+  const { createServer } = await import('vite')
 
-  
-
+  const server = createServer({ 
+    configureServer: [ await serverConfigPlugin(testRootFolder)  ] 
+  })
+  server.listen(options.port, options.port, async () => {
+    await launch(`http://${hostname}:${port}/${testRootFolder}/index.html`)
+    process.exit()
+  })
 }
