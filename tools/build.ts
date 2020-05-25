@@ -1,5 +1,14 @@
-import { bundle, clean, TSRollupConfig, copy } from 'aria-build'
+import { bundle, clean, TSRollupConfig, copy, symlinkDir } from 'aria-build'
 import { builtinModules } from 'module'
+
+const linkToExample  = () => {
+  return {
+    name: 'link',
+    buildEnd: async () => {
+      await symlinkDir('./node_modules', './examples/node_modules')
+    }
+  }
+}
 
 (async function() {
   const pkg = require('../package.json')
@@ -20,7 +29,8 @@ import { builtinModules } from 'module'
           targets: [
             { src: './src/*.html', dest: 'dist' }
           ]
-        }) 
+        }),
+        linkToExample()
       ],
       output: {
         file: './dist/setup.js',
