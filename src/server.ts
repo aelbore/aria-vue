@@ -7,7 +7,7 @@ export interface ServerOptions {
 }
 
 async function serverConfigPlugin(root: string) {
-  const Router = await import('koa-router')
+  const Router = require('koa-router')
   const router = new Router()
 
   return ({ app }) => {
@@ -27,10 +27,15 @@ export async function startServer(options: ServerOptions = {
 }) {
   const { port, hostname, testRootFolder } = options
   const { createServer } = await import('vite')
+  const configureServer = await serverConfigPlugin(testRootFolder) 
 
   const server = createServer({ 
-    configureServer: [ await serverConfigPlugin(testRootFolder)  ] 
+    configureServer, 
+    optimizeDeps: {
+      exclude: [ 'koa-router' ]
+    }
   })
+
   server.listen(options.port, options.port, async () => {
     await launch(`http://${hostname}:${port}/${testRootFolder}/index.html`)
     process.exit()
