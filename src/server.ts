@@ -23,7 +23,7 @@ async function serverConfigPlugin(root: string) {
 export async function startServer(options: ServerOptions = {
   port: 3000,
   hostname: 'localhost',
-  testRootFolder: 'test'
+  testRootFolder: './node_modules/test'
 }) {
   const { port, hostname, testRootFolder } = options
   const { createServer } = await import('vite')
@@ -36,7 +36,7 @@ export async function startServer(options: ServerOptions = {
     }
   })
 
-  server.listen(options.port, options.port, async () => {
+  server.listen(port, port, async () => {
     await launch(`http://${hostname}:${port}/${testRootFolder}/index.html`)
     process.exit()
   })
