@@ -1,6 +1,6 @@
 {
   "name": "aria-vue",
-  "version": "0.4.0",
+  "version": "0.3.0",
   "description": "",
   "main": "aria-vue.js",
   "bin": {
@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@vue/test-utils": "^2.0.0-alpha.6",
-    "koa-router": "^8.0.8"
+    "koa-router": "^8.0.8",
+    "http-terminator": "^2.0.3"
   }
 }
