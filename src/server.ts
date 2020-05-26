@@ -5,19 +5,19 @@ import { getTestFiles, launch } from 'aria-mocha'
 import { ServerConfig } from 'vite'
 
 export interface ServerOptions extends ServerConfig {
-  root?: string
+  dir?: string
   script?: string
 }
 
 async function serverConfigPlugin(options: ServerOptions) {
-  const { root, script } = options
+  const { dir, script } = options
 
   const Router = require('koa-router')
   const router = new Router()
 
   return ({ app }) => {
     router.get('/test-files', async (ctx, next) => {
-      ctx.body = await getTestFiles(`${root}/**/*.spec.js`, true)
+      ctx.body = await getTestFiles(`${dir}/**/*.spec.js`, true)
       return next()
     })
 
@@ -31,27 +31,26 @@ async function serverConfigPlugin(options: ServerOptions) {
 }
 
 export async function startServer(options: ServerOptions = {}) {
-  const { port = 3000, root = 'test', script } = options
+  const opts = { ...options }
+  delete opts.dir
+  delete opts.script
 
   const hostname = 'localhost'
   const defaultHtmlPath = 'node_modules/aria-vue/index.html'
 
-  const [ vite, terminator ] = await Promise.all([ 
-    import('vite'), 
-    import('http-terminator') 
-  ])
+  const { createServer } = await import('vite')
 
   const configureServer = [
     ...(options.configureServer 
           ? Array.isArray(options.configureServer)
               ? options.configureServer: [ options.configureServer ]
           : []),
-     await serverConfigPlugin({ script, root })
+     await serverConfigPlugin(options)
   ]
   
-  const server = vite.createServer({ ...options, configureServer })
-  server.listen(port, hostname)
+  const server = createServer({ ...opts, configureServer })
+  server.listen(opts.port, hostname)
 
-  await launch(`http://${hostname}:${port}/${normalize(defaultHtmlPath)}`)
-  await terminator.createHttpTerminator({ server }).terminate()
+  await launch(`http://${hostname}:${opts.port}/${normalize(defaultHtmlPath)}`)
+  process.exit()
 }
