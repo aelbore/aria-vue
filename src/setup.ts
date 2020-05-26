@@ -1,11 +1,3 @@
-import { config } from '@vue/test-utils'
-
-mocha.setup('bdd');
-/// @ts-ignore
-window.expect = chai.expect
-/// @ts-ignore
-window.assert = chai.assert
-
 beforeEach(() => {
   const existingRoot = document.getElementById('root')
   if (existingRoot) {
@@ -16,20 +8,6 @@ beforeEach(() => {
   root.id = 'root'
   document.body.appendChild(root)
 })
-
-function DataTestIdPlugin(wrapper) {
-  function findByTestId(selector) {
-    const dataSelector = `[data-testid='${selector}']`
-    const element = wrapper.element.querySelector(dataSelector)
-    if (element) {
-      return element
-    }
-    return null
-  }
-  return {
-    findByTestId
-  }
-}
 
 async function getSpecsToRun(dir?: string) {
   const testDir = dir ?? 'test'
@@ -54,19 +32,22 @@ async function getSpecsToRun(dir?: string) {
   return specs
 }
 
-async function setup() {  
-  /// @ts-ignore
-  config.plugins.VueWrapper.install(DataTestIdPlugin)
+export async function setup() {  
+  delete window['__VUE_DEVTOOLS_TOAST__']
 
-  /// @ts-ignore
-  delete window.__VUE_DEVTOOLS_TOAST__
+  const importFile = (file: string) => import(`../../${file}`)
 
   const specsNames = async () =>  {
     const specs = await getSpecsToRun()
-    return specs.map(specName => import(`../../${specName}`))
+    return specs.map(specName => importFile(specName))
   }
 
-  const specs = await specsNames()
+  const [ files, specs ] = await Promise.all([
+    fetch('/init').then(f => f.json()),
+    specsNames()
+  ])
+
+  await Promise.all(files.map((file: string) => importFile(file)))
   await Promise.all(specs)
 
   const run = () => {
