@@ -1,4 +1,4 @@
-import { bundle, clean, TSRollupConfig, copy, symlinkDir } from 'aria-build'
+import { bundle, clean, TSRollupConfig, copy, replaceContent } from 'aria-build'
 import { builtinModules } from 'module'
 
 (async function() {
@@ -11,6 +11,10 @@ import { builtinModules } from 'module'
     ...builtinModules
   ]
 
+  function replace(filename: string) {
+    return replaceContent({ filename, strToFind: '../src',  strToReplace: '../aria-vue' })
+  }
+
   const config: TSRollupConfig[] = [
     {
       input: './src/setup.ts',
@@ -18,7 +22,8 @@ import { builtinModules } from 'module'
       plugins: [ 
         copy({
           targets: [
-            { src: './src/*.html', dest: 'dist' }
+            { src: './src/*.html', dest: 'dist' },
+            { src: 'bin/*', dest: 'dist/bin', replace }
           ]
         })
       ],
@@ -28,7 +33,7 @@ import { builtinModules } from 'module'
       }
     },
     {
-      input: './src/server.ts',
+      input: './src/run.ts',
       external,
       output: [
         {
