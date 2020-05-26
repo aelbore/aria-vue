@@ -30,10 +30,9 @@ async function serverConfigPlugin(options: ServerOptions) {
   }
 }
 
-export async function startServer(options: ServerOptions = {
-  port: 3000, 
-  root: 'test'
-}) {
+export async function startServer(options: ServerOptions) {
+  const { port = 3000, root = 'test', script } = (options ?? {})
+
   const hostname = 'localhost'
   const defaultHtmlPath = 'node_modules/aria-vue/index.html'
 
@@ -43,12 +42,12 @@ export async function startServer(options: ServerOptions = {
           ? Array.isArray(options.configureServer)
               ? options.configureServer: [ options.configureServer ]
           : []),
-     await serverConfigPlugin(options)
+     await serverConfigPlugin({ script, root })
   ]
   
   const server = createServer({ ...options, configureServer })
-  server.listen(options.port, hostname)
+  server.listen(port, hostname)
 
-  await launch(`http://${hostname}:${options.port}/${normalize(defaultHtmlPath)}`)
+  await launch(`http://${hostname}:${port}/${normalize(defaultHtmlPath)}`)
   process.exit()
 }
