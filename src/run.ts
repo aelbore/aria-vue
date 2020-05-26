@@ -1,9 +1,14 @@
 
-import { ServerOptions, startServer } from './server'
+import { startServer } from './server'
+
+export interface CliOptions {
+  port?: number
+  script?: string
+  root?: string
+}
 
 export async function run({ version, name }) {
   const prog = require('sade')(name, true)
-
   prog
     .version(version)
     .option('-p, --port', 'port to use default(3000)', 3000)
@@ -13,6 +18,7 @@ export async function run({ version, name }) {
     .parse(process.argv)
 }
 
-export async function handler(options: ServerOptions) {
-  await startServer(options)
+export async function handler(options: CliOptions) {
+  const { port, script, root } = options
+  await startServer({ port, script, root })
 }
