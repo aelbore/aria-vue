@@ -33,7 +33,7 @@ import { builtinModules } from 'module'
       }
     },
     {
-      input: './src/run.ts',
+      input: './src/index.ts',
       external,
       output: [
         {
