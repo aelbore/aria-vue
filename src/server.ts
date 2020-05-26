@@ -36,7 +36,11 @@ export async function startServer(options: ServerOptions = {}) {
   const hostname = 'localhost'
   const defaultHtmlPath = 'node_modules/aria-vue/index.html'
 
-  const { createServer } = await import('vite')
+  const [ vite, terminator ] = await Promise.all([ 
+    import('vite'), 
+    import('http-terminator') 
+  ])
+
   const configureServer = [
     ...(options.configureServer 
           ? Array.isArray(options.configureServer)
@@ -45,9 +49,9 @@ export async function startServer(options: ServerOptions = {}) {
      await serverConfigPlugin({ script, root })
   ]
   
-  const server = createServer({ ...options, configureServer })
+  const server = vite.createServer({ ...options, configureServer })
   server.listen(port, hostname)
 
   await launch(`http://${hostname}:${port}/${normalize(defaultHtmlPath)}`)
-  process.exit()
+  await terminator.createHttpTerminator({ server }).terminate()
 }
