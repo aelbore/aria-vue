@@ -1,14 +1,18 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>☕️ Mocha Tests</title>
+  <title>Test</title>
   <link href="/node_modules/mocha/mocha.css" rel="stylesheet"/>
   <script src="/node_modules/chai/chai.js"></script>
   <script src="/node_modules/mocha/mocha.js"></script>
+  <script>
+    mocha.setup('bdd');
+    window.expect = chai.expect
+    window.assert = chai.assert
+  </script>
 </head>
   <body>
     <div id="mocha"></div>
-    <div id="root"></div>
     <script type="module" src="/node_modules/aria-vue/setup.js"></script>
   </body>
 </html>

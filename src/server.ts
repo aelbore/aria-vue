@@ -1,12 +1,17 @@
-import { getTestFiles, launch } from 'aria-mocha'
+import { normalize } from 'path'
+import { existsSync } from 'fs'
 
-export interface ServerOptions {
-  port?: number
-  hostname?: string
-  testRootFolder?: string
+import { getTestFiles, launch } from 'aria-mocha'
+import { ServerConfig } from 'vite'
+
+export interface ServerOptions extends ServerConfig {
+  root?: string
+  script?: string
 }
 
-async function serverConfigPlugin(root: string) {
+async function serverConfigPlugin(options: ServerOptions) {
+  const { root, script } = options
+
   const Router = require('koa-router')
   const router = new Router()
 
@@ -15,29 +20,35 @@ async function serverConfigPlugin(root: string) {
       ctx.body = await getTestFiles(`${root}/**/*.spec.js`, true)
       return next()
     })
+
+    router.get('/init', async(ctx, next) => {
+      ctx.body = existsSync(script) ? [ script ]: []
+      return next()  
+    })
   
     app.use(router.routes())
   }
 }
 
 export async function startServer(options: ServerOptions = {
-  port: 3000,
-  hostname: 'localhost',
-  testRootFolder: './node_modules/test'
+  port: 3000, 
+  root: 'test'
 }) {
-  const { port, hostname, testRootFolder } = options
+  const hostname = 'localhost'
+  const defaultHtmlPath = 'node_modules/aria-vue/index.html'
+
   const { createServer } = await import('vite')
-  const configureServer = await serverConfigPlugin(testRootFolder) 
+  const configureServer = [
+    ...(options.configureServer 
+          ? Array.isArray(options.configureServer)
+              ? options.configureServer: [ options.configureServer ]
+          : []),
+     await serverConfigPlugin(options)
+  ]
+  
+  const server = createServer({ ...options, configureServer })
+  server.listen(options.port, hostname)
 
-  const server = createServer({ 
-    configureServer, 
-    optimizeDeps: {
-      exclude: [ 'koa-router' ]
-    }
-  })
-
-  server.listen(port, port, async () => {
-    await launch(`http://${hostname}:${port}/${testRootFolder}/index.html`)
-    process.exit()
-  })
+  await launch(`http://${hostname}:${options.port}/${normalize(defaultHtmlPath)}`)
+  process.exit()
 }
