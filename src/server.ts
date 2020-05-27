@@ -25,7 +25,7 @@ function normalizeOptions(options: Options) {
   return { script, headless, port, dir, path, html }
 }
 
-export function serverConfigPlugin(options: Options) {
+export function testPlugin(options: Options) {
   const { script, dir, path, html } = normalizeOptions(options)
 
   const Router = require('koa-router')
@@ -60,7 +60,7 @@ export async function startServer(options: Options, config?: ServerConfig) {
           ? Array.isArray(config?.configureServer)
               ? config?.configureServer: [ config?.configureServer ]
           : []),
-     serverConfigPlugin({ ...options, html })
+    testPlugin({ ...options, html })
   ]
   
   const { createServer } = await import('vite')

@@ -5,6 +5,20 @@
   <link href="/node_modules/mocha/mocha.css" rel="stylesheet"/>
   <script src="/node_modules/chai/chai.js"></script>
   <script src="/node_modules/mocha/mocha.js"></script>
+  <style>
+    #meta > * {
+      margin: 20px 50px 0 50px;
+      font-weight: 200;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    #meta > h1 { font-size: 2em; }
+    #meta > h2 { font-size: 1.5em; }
+
+    #root {
+      margin: 20px 50px 0 50px;
+    }
+  </style>
   <script>
     mocha.setup('bdd');
     window.expect = chai.expect
@@ -12,7 +26,13 @@
   </script>
 </head>
   <body>
-    <div id="mocha"></div>
+    <div id="meta">
+      <h2>Mocha HTML Reporter (<a href="https://mochajs.org/#reporting">link</a>)</h2>
+      <div><div id="mocha" style="margin: 0;"></div></div>
+      <hr/>
+      <h2>Current Spec</h2>
+    </div>
+    <div id="root"></div>
     <script type="module" src="/node_modules/aria-vue/setup.js"></script>
   </body>
 </html>
