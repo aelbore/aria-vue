@@ -1,16 +1,34 @@
 import { existsSync } from 'fs'
+import { normalize } from 'path'
 
 import { getTestFiles, launch } from 'aria-mocha'
 import { ServerConfig } from 'vite'
+
 import { Options } from './options'
 
 const createUrl = ({ port, hostname, path }) => `http://${hostname}:${port}/${path}`
 
+function normalizeOptions(options: Options) {
+  const removeBacklash = (str: string) => {
+    const paths = normalize(str).split('/')
+    return (paths.length > 1) ? paths.splice(1).join('/'): paths.shift()
+  }
+  const { 
+    script,
+    headless,
+    port = 3000,
+    dir = removeBacklash('test'), 
+    path = removeBacklash('tests'), 
+    html = removeBacklash('/node_modules/aria-vue/index.html')
+  } = options
+
+  return { script, headless, port, dir, path, html }
+}
+
 export function serverConfigPlugin(options: Options) {
-  const { dir, script, path, html } = options
+  const { script, dir, path, html } = normalizeOptions(options)
 
   const Router = require('koa-router')
-  const send = require('koa-send')
   const router = new Router()
 
   return ({ app }) => {
@@ -25,7 +43,7 @@ export function serverConfigPlugin(options: Options) {
     })
 
     app.use(async (ctx, next) => {
-      if (ctx.path.includes(`/${path}`)) return send(ctx, html)
+      if (ctx.path.includes(`/${path}`)) return require('koa-send')(ctx, html)
       return next()
     })
   
@@ -34,12 +52,9 @@ export function serverConfigPlugin(options: Options) {
 }
 
 export async function startServer(options: Options, config?: ServerConfig) {
-  const { port, headless } = options
+  const { port, headless, path, html } = normalizeOptions(options)
 
-  const path = options.path ? options.path.substr(1, options.path.length): 'tests'
   const hostname = 'localhost'
-  const html = options.html ?? '/node_modules/aria-vue/index.html'
-
   const configureServer = [
     ...(config?.configureServer 
           ? Array.isArray(config?.configureServer)
@@ -53,9 +68,9 @@ export async function startServer(options: Options, config?: ServerConfig) {
   server.listen(port, hostname)
 
   if (headless) {
-    await launch(createUrl({ hostname, port, path: html.substr(1, html.length) }))
+    await launch(createUrl({ hostname, port, path: html }))
     process.exit()
   } else {
-    console.log(`Go to ${createUrl({ hostname, port, path })} \nto see test result(s).`)
+    console.log(`Go to ${createUrl({ hostname, port, path })}`)
   }
 }

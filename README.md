@@ -10,7 +10,7 @@ Installation
     npm install --save-dev aria-vue aria-mocha puppeteer
   ```
 
-Installation
+Usage
 ------------
 ```
 aria-vue --help
@@ -19,8 +19,8 @@ aria-vue --help
     $ aria-vue [options]
 
   Options
-    -p, --port       port to use default(3000)  (default 3000)
-    -d, --dir        root directory of test files default (test folder)  (default test)
+    -p, --port       port to use default(3000)
+    -d, --dir        root directory of test files (default test)
     --headless       run test(s) in headless  (default false)
     --script         scripts or helper scripts to load before setup
     --path           virtual path for your html reporter
