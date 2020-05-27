@@ -24,10 +24,12 @@ aria-vue --help
     --headless       run test(s) in headless  (default false)
     --script         scripts or helper scripts to load before setup
     --path           virtual path for your html reporter
+    --html           path of your index.html file
     -v, --version    Displays current version
     -h, --help       Displays this message
 
   Examples
     $ aria-vue --headless --script ./test/plugin.js
     $ aria-vue --path my-virtual-path --script ./test/plugin.js
+    $ aria-vue --path test-ui --html ./test/index.html --script ./test/plugins.js
 ```
