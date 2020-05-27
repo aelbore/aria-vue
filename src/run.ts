@@ -11,13 +11,14 @@ export async function run({ version, name }) {
     .option('--headless', 'run test(s) in headless', false)
     .option('--script', 'scripts or helper scripts to load before setup')
     .option('--path', 'virtual path for your html reporter')
+    .option('--html', 'path of your index.html file')
     .example('--headless --script ./test/plugin.js')
     .example('--path my-virtual-path --script ./test/plugin.js')
+    .example('--path test-ui --html ./test/index.html --script ./test/plugins.js')
     .action(handler)
     .parse(process.argv)
 }
 
 export async function handler(options: Options) {
-  const { port, script, dir, headless } = options
   await startServer(options)
 }
