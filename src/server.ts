@@ -1,20 +1,16 @@
-import { normalize } from 'path'
 import { existsSync } from 'fs'
 
 import { getTestFiles, launch } from 'aria-mocha'
 import { ServerConfig } from 'vite'
+import { Options } from './options'
 
-export interface ServerOptions extends ServerConfig {
-  dir?: string
-  script?: string
-  headless?: boolean
-  html?: string
-}
+const createUrl = ({ port, hostname, path }) => `http://${hostname}:${port}/${path}`
 
-async function serverConfigPlugin(options: ServerOptions) {
-  const { dir, script } = options
+export function serverConfigPlugin(options: Options) {
+  const { dir, script, path, html } = options
 
   const Router = require('koa-router')
+  const send = require('koa-send')
   const router = new Router()
 
   return ({ app }) => {
@@ -27,43 +23,39 @@ async function serverConfigPlugin(options: ServerOptions) {
       ctx.body = existsSync(script) ? [ script ]: []
       return next()  
     })
+
+    app.use(async (ctx, next) => {
+      if (ctx.path.includes(`/${path}`)) return send(ctx, html)
+      return next()
+    })
   
     app.use(router.routes())
   }
 }
 
-async function launchHeadless({ port, hostname, html }) {
-  await launch(`http://${hostname}:${port}/${normalize(html)}`)
-  process.exit()
-}
+export async function startServer(options: Options, config?: ServerConfig) {
+  const { port, headless } = options
 
-export async function startServer(options: ServerOptions = {}) {
-  const opts = { ...options }
-  delete opts.dir
-  delete opts.script
-
+  const path = options.path ? options.path.substr(1, options.path.length): 'tests'
   const hostname = 'localhost'
   const html = options.html ?? '/node_modules/aria-vue/index.html'
 
-  const { createServer } = await import('vite')
-
   const configureServer = [
-    ...(options.configureServer 
-          ? Array.isArray(options.configureServer)
-              ? options.configureServer: [ options.configureServer ]
+    ...(config?.configureServer 
+          ? Array.isArray(config?.configureServer)
+              ? config?.configureServer: [ config?.configureServer ]
           : []),
-     await serverConfigPlugin(options)
+     serverConfigPlugin({ ...options, html })
   ]
   
-  const server = createServer({ ...opts, configureServer })
-  server.listen(opts.port, hostname)
+  const { createServer } = await import('vite')
+  const server = createServer({ ...(config ?? {}), port, configureServer })
+  server.listen(port, hostname)
 
-  !options.headless 
-    && console.log(`
-      Go to http://${hostname}:${opts.port}/tests
-      to see test result(s).
-    `)
-
-  options.headless 
-    && await launchHeadless({ hostname, port: opts.port, html })
+  if (headless) {
+    await launch(createUrl({ hostname, port, path: html.substr(1, html.length) }))
+    process.exit()
+  } else {
+    console.log(`Go to ${createUrl({ hostname, port, path })} \nto see test result(s).`)
+  }
 }
