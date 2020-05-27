@@ -33,3 +33,19 @@ aria-vue --help
     $ aria-vue --path my-virtual-path --script ./test/plugin.js
     $ aria-vue --path test-ui --html ./test/index.html --script ./test/plugins.js
 ```
+
+Plugin usage
+------------
+* Create `vite.config.test.js` file
+```javascript
+const { testPlugin } = require('aria-vue')
+
+const configureServer = testPlugin({   
+  script: './test/plugins.js'
+})
+
+module.exports = {
+  configureServer
+}
+```
+* `vite --config vite.config.test.js`
