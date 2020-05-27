@@ -7,6 +7,8 @@ import { ServerConfig } from 'vite'
 export interface ServerOptions extends ServerConfig {
   dir?: string
   script?: string
+  headless?: boolean
+  html?: string
 }
 
 async function serverConfigPlugin(options: ServerOptions) {
@@ -30,13 +32,18 @@ async function serverConfigPlugin(options: ServerOptions) {
   }
 }
 
+async function launchHeadless({ port, hostname, html }) {
+  await launch(`http://${hostname}:${port}/${normalize(html)}`)
+  process.exit()
+}
+
 export async function startServer(options: ServerOptions = {}) {
   const opts = { ...options }
   delete opts.dir
   delete opts.script
 
   const hostname = 'localhost'
-  const defaultHtmlPath = 'node_modules/aria-vue/index.html'
+  const html = options.html ?? '/node_modules/aria-vue/index.html'
 
   const { createServer } = await import('vite')
 
@@ -51,6 +58,12 @@ export async function startServer(options: ServerOptions = {}) {
   const server = createServer({ ...opts, configureServer })
   server.listen(opts.port, hostname)
 
-  await launch(`http://${hostname}:${opts.port}/${normalize(defaultHtmlPath)}`)
-  process.exit()
+  !options.headless 
+    && console.log(`
+      Go to http://${hostname}:${opts.port}/tests
+      to see test result(s).
+    `)
+
+  options.headless 
+    && await launchHeadless({ hostname, port: opts.port, html })
 }
