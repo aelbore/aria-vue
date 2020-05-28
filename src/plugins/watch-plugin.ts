@@ -1,8 +1,8 @@
 import { basename } from 'path'
 import { isGlob, globFiles, launch } from 'aria-mocha'
 
-import { WatchOptions } from '../options'
-import { createUrl, normalizeOptions } from '../common'
+import { WatchOptions } from '../common/options'
+import { createUrl, normalizeOptions } from '../common/common'
 
 export function watchPlugin(options: WatchOptions = {}) {
   const { port, path, hostname, headless } = normalizeOptions(options)

@@ -1,9 +1,9 @@
 import { launch } from 'aria-mocha'
 import { ServerConfig } from 'vite'
 
-import { Options } from './options'
-import { normalizeOptions, createUrl } from './common'
-import { testPlugin, watchPlugin } from './plugins/plugins'
+import { Options } from '../common/options'
+import { normalizeOptions, createUrl } from '../common/common'
+import { testPlugin, watchPlugin } from '../plugins/plugins'
 
 async function launchHeadless({ hostname, port, path, watch }) {
   await launch(createUrl({ hostname, port, path }))
