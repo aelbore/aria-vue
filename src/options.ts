@@ -7,4 +7,16 @@ export interface Options {
   path?: string
   html?: string,
   watch?: boolean
+  hostname?: string
+}
+
+export interface WatchOptions extends Pick<
+  Options, 
+    'port' | 
+    'html' | 
+    'path' | 
+    'headless' |
+    'hostname'
+  > {
+  files?: string | string[]
 }

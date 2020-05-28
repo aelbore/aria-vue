@@ -21,6 +21,7 @@ aria-vue --help
   Options
     -p, --port       port to use default(3000)
     -d, --dir        root directory of test files (default test)
+    -w --watch       enable watch (default false)
     --headless       run test(s) in headless  (default false)
     --script         scripts or helper scripts to load before setup
     --path           virtual path for your html reporter
@@ -29,8 +30,8 @@ aria-vue --help
     -h, --help       Displays this message
 
   Examples
-    $ aria-vue --headless --script ./test/plugin.js
-    $ aria-vue --path my-virtual-path --script ./test/plugin.js
+    $ aria-vue --watch --headless --script ./test/plugin.js
+    $ aria-vue --watch --path my-virtual-path --script ./test/plugin.js
     $ aria-vue --path test-ui --html ./test/index.html --script ./test/plugins.js
 ```
 
@@ -38,14 +39,19 @@ Plugin usage
 ------------
 * Create `vite.config.test.js` file
 ```javascript
-const { testPlugin } = require('aria-vue')
+const { testPlugin, watchPlugin } = require('aria-vue')
 
-const configureServer = testPlugin({   
-  script: './test/plugins.js'
-})
+/// by default (watchPlugin)
+/// all the files in src and test folder 
+/// with .spec.js and .vue extension will watch for change
 
 module.exports = {
-  configureServer
+  configureServer: [
+    testPlugin({   
+      script: './test/plugins.js'
+    }),
+    watchPlugin()
+  ]
 }
 ```
 * `vite --config vite.config.test.js`
