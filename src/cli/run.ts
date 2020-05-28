@@ -9,7 +9,7 @@ export async function run({ version, name }) {
     .option('-p, --port', 'port to use default(3000)', 3000)
     .option('-d --dir', 'root directory of test files default (test folder)', 'test')
     .option('-w --watch', 'enable watch', false)
-    .option('-h --headless', 'run test(s) in headless', false)
+    .option('-H --headless', 'run test(s) in headless', false)
     .option('--script', 'scripts or helper scripts to load before setup')
     .option('--path', 'virtual path for your html reporter')
     .option('--html', 'path of your index.html file')

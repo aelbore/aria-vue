@@ -12,10 +12,10 @@ Installation
 
 Example Code
 ------------
-* npm install
-* npm run build
-* cd example
-* npm run headless
+* `npm install`
+* `npm run build`
+* `cd example`
+* `npm run headless`
 
 Usage
 ------------
@@ -29,7 +29,7 @@ aria-vue --help
     -p, --port       port to use default(3000)
     -d, --dir        root directory of test files (default test)
     -w --watch       enable watch (default false)
-    -h --headless    run test(s) in headless  (default false)
+    -H --headless    run test(s) in headless  (default false)
     --script         scripts or helper scripts to load before setup
     --path           virtual path for your html reporter
     --html           path of your index.html file
@@ -37,7 +37,7 @@ aria-vue --help
     -h, --help       Displays this message
 
   Examples
-    $ aria-vue -w -h --script ./test/plugin.js
+    $ aria-vue -w -H --script ./test/plugin.js
     $ aria-vue --watch --path my-virtual-path --script ./test/plugin.js
     $ aria-vue --path test-ui --html ./test/index.html --script ./test/plugins.js
 ```
