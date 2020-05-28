@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test": "aria-vue -w --headless"
+    "test": "aria-vue --headless --script ./test/plugins.js"
   },
   "keywords": [
     "test"
