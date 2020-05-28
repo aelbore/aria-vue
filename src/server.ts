@@ -21,7 +21,9 @@ export async function startServer(options: Options, config?: ServerConfig) {
               ? config?.configureServer: [ config?.configureServer ]
           : []),
     testPlugin({ ...options, html }),
-    watch && watchPlugin({ port, headless, path, hostname })
+    ...(watch 
+         ? [ watchPlugin({ port, headless, path, hostname }) ]
+         : [])
   ]
   
   const { createServer } = await import('vite')
