@@ -5,5 +5,6 @@ export interface Options {
   dir?: string
   headless?: boolean
   path?: string
-  html?: string
+  html?: string,
+  watch?: boolean
 }

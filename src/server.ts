@@ -1,7 +1,7 @@
 import { existsSync } from 'fs'
 import { normalize } from 'path'
 
-import { getTestFiles, launch } from 'aria-mocha'
+import { getTestFiles, launch, isGlob, globFiles } from 'aria-mocha'
 import { ServerConfig } from 'vite'
 
 import { Options } from './options'
@@ -16,13 +16,14 @@ function normalizeOptions(options: Options) {
   const { 
     script,
     headless,
+    watch,
     port = 3000,
     dir = removeBacklash('test'), 
     path = removeBacklash('tests'), 
     html = removeBacklash('/node_modules/aria-vue/index.html')
   } = options
 
-  return { script, headless, port, dir, path, html }
+  return { script, watch, headless, port, dir, path, html }
 }
 
 export function testPlugin(options: Options) {
@@ -51,8 +52,32 @@ export function testPlugin(options: Options) {
   }
 }
 
+export function watchPlugin(files?: string | string[]) {
+  return async ({ watcher, resolver }) => {
+    const watchFiles = files ? Array.isArray(files) ? files: [ files ]: []
+    const substr = (str: string) => str.substr(1, str.length)
+    
+    const globs = await Promise.all(watchFiles.map(async file => {
+     const files = isGlob(file) ? await globFiles(file, true): [ file ]
+      return files.map(str => substr(str))
+    }))
+    /// @ts-ignore
+    const flatFiles = globs.flat()
+
+    watcher.on('change', async (file: string) => {
+      const path = resolver.fileToRequest(file)
+      flatFiles.includes(path)
+        && watcher.send({
+            type: 'full-reload',
+            path,
+            timestamp: Date.now()
+          })
+    })
+  }
+}
+
 export async function startServer(options: Options, config?: ServerConfig) {
-  const { port, headless, path, html } = normalizeOptions(options)
+  const { port, headless, path, watch, html } = normalizeOptions(options)
 
   const hostname = 'localhost'
   const configureServer = [
@@ -60,7 +85,13 @@ export async function startServer(options: Options, config?: ServerConfig) {
           ? Array.isArray(config?.configureServer)
               ? config?.configureServer: [ config?.configureServer ]
           : []),
-    testPlugin({ ...options, html })
+    testPlugin({ ...options, html }),
+    (watch && !headless) 
+        && watchPlugin([ 
+            './src/**/*.vue', 
+            './src/**/*.spec.js',
+            './test/**/*.spec.js'
+          ])
   ]
   
   const { createServer } = await import('vite')
