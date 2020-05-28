@@ -1,8 +1,8 @@
 import { existsSync } from 'fs'
 import { getTestFiles } from 'aria-mocha'
 
-import { Options } from '../options'
-import { normalizeOptions } from '../common'
+import { Options } from '../common/options'
+import { normalizeOptions } from '../common/common'
 
 export function testPlugin(options: Options) {
   const { script, dir, path, html } = normalizeOptions(options)
