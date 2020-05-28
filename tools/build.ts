@@ -1,4 +1,4 @@
-import { bundle, clean, TSRollupConfig, copy, replaceContent } from 'aria-build'
+import { bundle, clean, TSRollupConfig, copy, replaceContent, symlinkDir } from 'aria-build'
 import { builtinModules } from 'module'
 
 (async function() {
@@ -36,14 +36,8 @@ import { builtinModules } from 'module'
       input: './src/index.ts',
       external,
       output: [
-        {
-          file: './dist/aria-vue.js',
-          format: 'cjs'
-        },
-        {
-          file: './dist/aria-vue.es.js',
-          format: 'es'
-        }
+        { file: './dist/aria-vue.js', format: 'cjs' },
+        { file: './dist/aria-vue.es.js', format: 'es' }
       ],
       tsconfig: {
         compilerOptions: {
@@ -52,7 +46,8 @@ import { builtinModules } from 'module'
       }
     }
   ]
-
+  
   await clean('dist')
   await bundle({ config, esbuild: true, write: true })
+  await symlinkDir('./node_modules', './example/node_modules')
 })()
