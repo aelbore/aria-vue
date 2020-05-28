@@ -33,14 +33,16 @@
     "vite": ">=^0.17.1"
   },
   "devDependencies": {
-    "@types/koa-router": "7.4.1",
-    "@vue/test-utils": "^2.0.0-alpha.6",
+    "@types/koa-router": "^7.4.1",
+    "@types/koa": "^2.0.45",
+    "@types/mocha": "^7.0.2",
     "@vue/compiler-sfc": "^3.0.0-beta.14",
+    "@vue/test-utils": "^2.0.0-alpha.6",
     "aria-build": "^0.4.0",
     "aria-fs": "^0.4.0",
-    "aria-mocha":"^0.4.0",
-    "typescript": "^3.9.3",
+    "aria-mocha": "^0.4.0",
     "puppeteer": "^3.1.0",
+    "typescript": "^3.9.3",
     "vite": "^0.17.1",
     "vue": "^3.0.0-beta.9"
   },

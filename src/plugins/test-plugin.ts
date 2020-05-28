@@ -1,8 +1,8 @@
 import { existsSync } from 'fs'
 import { getTestFiles } from 'aria-mocha'
+import { Context, Next } from 'koa'
 
-import { Options } from '../common/options'
-import { normalizeOptions } from '../common/common'
+import { Options, normalizeOptions } from '../common/common'
 
 export function testPlugin(options: Options) {
   const { script, dir, path, html } = normalizeOptions(options)
@@ -11,19 +11,19 @@ export function testPlugin(options: Options) {
   const router = new Router()
 
   return ({ app }) => {
-    router.get('/test-files', async (ctx, next) => {
+    router.get('/test-files', async(ctx: Context, next: Next) => {
       ctx.body = await getTestFiles(`${dir}/**/*.spec.js`, true)
-      return next()
+      await next()
     })
 
-    router.get('/init', async(ctx, next) => {
+    router.get('/init',  async(ctx: Context, next: Next) => {
       ctx.body = existsSync(script) ? [ script ]: []
-      return next()  
+      await next()  
     })
 
-    app.use(async (ctx, next) => {
+    app.use(async(ctx: Context, next: Next) => {
       if (ctx.path.includes(`/${path}`)) return require('koa-send')(ctx, html)
-      return next()
+      await next()
     })
   
     app.use(router.routes())

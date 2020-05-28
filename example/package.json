@@ -7,10 +7,12 @@
     "aria-vue": "node ./node_modules/aria-vue/bin/aria-vue.js",
     "dev": "vite",
     "build": "vite build",
-    "test": "npm run aria-vue -- --headless --script ./test/plugins.js"
+    "test": "npm run aria-vue -- -H --script ./test/plugins.js"
   },
   "keywords": [
-    "test"
+    "test",
+    "vue",
+    "tdd"
   ],
   "author": "Arjay Elbore",
   "license": "MIT",
