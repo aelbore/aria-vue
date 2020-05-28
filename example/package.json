@@ -1,0 +1,27 @@
+{
+  "name": "example",
+  "version": "0.0.0",
+  "description": "Example code for testing in vue",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "aria-vue -w --headless"
+  },
+  "keywords": [
+    "test"
+  ],
+  "author": "Arjay Elbore",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^3.0.0-beta.9"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.0-beta.14",
+    "@vue/test-utils": "^2.0.0-alpha.6",
+    "aria-mocha": "^0.4.0",
+    "aria-vue": "^0.3.7",
+    "puppeteer": "^3.1.0",
+    "vite": "0.17.1"
+  }
+}
