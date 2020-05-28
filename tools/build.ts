@@ -49,5 +49,8 @@ import { builtinModules } from 'module'
   
   await clean('dist')
   await bundle({ config, esbuild: true, write: true })
-  await symlinkDir('./node_modules', './example/node_modules')
+  await Promise.all([
+    symlinkDir('./node_modules', './example/node_modules'),
+    symlinkDir('./dist', './node_modules/aria-vue')
+  ])
 })()

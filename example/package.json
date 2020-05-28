@@ -4,9 +4,10 @@
   "description": "Example code for testing in vue",
   "main": "index.js",
   "scripts": {
+    "aria-vue": "node ./node_modules/aria-vue/bin/aria-vue.js",
     "dev": "vite",
     "build": "vite build",
-    "test": "aria-vue --headless --script ./test/plugins.js"
+    "test": "npm run aria-vue -- --headless --script ./test/plugins.js"
   },
   "keywords": [
     "test"
