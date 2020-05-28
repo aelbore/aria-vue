@@ -1,6 +1,8 @@
 import { normalize } from 'path'
 import { Options } from './options'
 
+export * from './options'
+
 const removeBacklash = (str: string) => {
   const paths = normalize(str).split('/')
   return (paths.length > 1) ? paths.splice(1).join('/'): paths.shift()
