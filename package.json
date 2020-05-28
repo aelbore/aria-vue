@@ -1,6 +1,6 @@
 {
   "name": "aria-vue",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Simple testing tools for vuejs",
   "main": "aria-vue.js",
   "bin": {
