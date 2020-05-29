@@ -15,7 +15,7 @@ Example Code
 * `npm install`
 * `npm run build`
 * `cd example`
-* `npm run headless`
+* `npm test`
 
 Usage
 ------------
