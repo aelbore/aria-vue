@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@types/koa-router": "^7.4.1",
-    "@types/koa": "^2.0.45",
+    "@types/koa": "^2.11.3",
     "@types/mocha": "^7.0.2",
     "@vue/compiler-sfc": "^3.0.0-beta.14",
     "@vue/test-utils": "^2.0.0-alpha.6",
