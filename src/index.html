@@ -20,7 +20,8 @@
     }
   </style>
   <script>
-    mocha.setup('bdd');
+    mocha.setup('bdd')
+    mocha.timeout(5000)
     window.expect = chai.expect
     window.assert = chai.assert
   </script>
@@ -28,7 +29,9 @@
   <body>
     <div id="meta">
       <h2>Mocha HTML Reporter (<a href="https://mochajs.org/#reporting">link</a>)</h2>
-      <div><div id="mocha" style="margin: 0;"></div></div>
+      <div>
+        <div id="mocha" style="margin: 0;"></div>
+      </div>
       <hr/>
       <h2>Current Spec</h2>
     </div>

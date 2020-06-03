@@ -1,4 +1,6 @@
 beforeEach(() => {
+  delete window["__VUE_DEVTOOLS_TOAST__"]
+
   const existingRoot = document.getElementById('root')
   if (existingRoot) {
     existingRoot.innerHTML = ''
