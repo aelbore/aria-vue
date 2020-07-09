@@ -22,7 +22,7 @@
     "rollup",
     "typescript"
   ],
-  "author": "Arjay Elbore",
+  "author": "Arjay Elbore <aelbore.sg@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/aelbore/aria-vue/issues"
