@@ -36,15 +36,15 @@
     "@types/koa-router": "^7.4.1",
     "@types/koa": "^2.11.3",
     "@types/mocha": "^8.0.0",
-    "@vue/compiler-sfc": "^3.0.0-beta.20",
+    "@vue/compiler-sfc": "^3.0.0-rc.4",
     "@vue/test-utils": "^2.0.0-alpha.8",
     "aria-build": "^0.4.5",
     "aria-fs": "^0.4.5",
     "aria-mocha": "^0.4.5",
-    "puppeteer": "^5.0.0",
-    "typescript": "^3.9.6",
-    "vite": "^1.0.0-beta.11",
-    "vue": "^3.0.0-beta.20"
+    "puppeteer": "^5.2.1",
+    "typescript": "^3.9.7",
+    "vite": "1.0.0-rc.3",
+    "vue": "^3.0.0-rc.4"
   },
   "dependencies": {
     "koa-router": "^9.1.0"
