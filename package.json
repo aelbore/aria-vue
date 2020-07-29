@@ -36,7 +36,7 @@
     "@types/koa-router": "^7.4.1",
     "@types/koa": "^2.11.3",
     "@types/mocha": "^8.0.0",
-    "@vue/compiler-sfc": "^3.0.0-rc.4",
+    "@vue/compiler-sfc": "^3.0.0-rc.5",
     "@vue/test-utils": "^2.0.0-alpha.8",
     "aria-build": "^0.4.5",
     "aria-fs": "^0.4.5",
@@ -44,7 +44,7 @@
     "puppeteer": "^5.2.1",
     "typescript": "^3.9.7",
     "vite": "1.0.0-rc.3",
-    "vue": "^3.0.0-rc.4"
+    "vue": "^3.0.0-rc.5"
   },
   "dependencies": {
     "koa-router": "^9.1.0"
