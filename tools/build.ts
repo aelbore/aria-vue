@@ -1,8 +1,9 @@
-import { bundle, clean, TSRollupConfig, copy, replaceContent, symlinkDir } from 'aria-build'
+import { bundle, clean, TSRollupConfig, copy, writeFile, replaceContent, symlinkDir } from 'aria-build'
 import { builtinModules } from 'module'
 
 (async function() {
   const pkg = require('../package.json')
+  const postinstall = pkg.scripts.postinstall
 
   const external = [
     ...Object.keys(pkg.dependencies),
@@ -10,6 +11,12 @@ import { builtinModules } from 'module'
     ...Object.keys(pkg.devDependencies),
     ...builtinModules
   ]
+
+  async function addPostInstall() {
+    const json = require('../dist/package.json')
+    json.scripts = { postinstall }
+    await writeFile('./dist/package.json', JSON.stringify(json, null, 2))
+  }
 
   function replace(filename: string) {
     return replaceContent({ filename, strToFind: '../src',  strToReplace: '../aria-vue' })
@@ -50,6 +57,7 @@ import { builtinModules } from 'module'
   
   await clean('dist')
   await bundle({ config, esbuild: true, write: true })
+  await addPostInstall()
   await Promise.all([
     symlinkDir('./node_modules', './example/node_modules'),
     symlinkDir('./dist', './node_modules/aria-vue')
