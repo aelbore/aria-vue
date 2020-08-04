@@ -27,7 +27,14 @@ export async function startServer(options: Options, config?: ServerConfig) {
   ]
   
   const { createServer } = await import('vite')
-  const server = createServer({ ...(config ?? {}), port, configureServer })
+  const server = createServer({ 
+    ...(config ?? {}), 
+    port, 
+    configureServer,
+    alias: {
+      '@babel/parser': '@babel/parser/index'
+    }
+  })
 
   server.listen(port, hostname, async () => {
     headless 
