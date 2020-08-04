@@ -1,13 +1,12 @@
 {
   "name": "aria-vue",
-  "version": "0.4.0-beta.3",
+  "version": "0.4.0",
   "description": "Simple testing tools for vuejs",
   "main": "aria-vue.js",
   "bin": {
     "aria-vue": "./bin/aria-vue.js"
   },
   "scripts": {
-    "postinstall": "node ./tools/parser/postinstall.js",
     "build": "ts-node --project ./tools/tsconfig.json ./tools/build.ts"
   },
   "repository": {
@@ -34,9 +33,10 @@
     "vite": ">=0.20.10"
   },
   "devDependencies": {
-    "@types/koa-router": "^7.4.1",
     "@types/koa": "^2.11.3",
+    "@types/koa-router": "^7.4.1",
     "@types/mocha": "^8.0.1",
+    "@types/sade": "^1.7.2",
     "@vue/compiler-sfc": "^3.0.0-rc.5",
     "@vue/test-utils": "^2.0.0-beta.1",
     "aria-build": "^0.5.1",

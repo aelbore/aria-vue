@@ -3,8 +3,10 @@ import { startServer } from './server'
 import { Options } from '../common/options'
 import { patchBabelParser } from '../patch/index'
 
+import sade from 'sade'
+
 export async function run({ version, name }) {
-  const prog = require('sade')(name, true)
+  const prog = sade(name, true)
   prog
     .version(version)
     .option('-p, --port', 'port to use default(3000)', 3000)
@@ -23,7 +25,6 @@ export async function run({ version, name }) {
 }
 
 export async function handler(options: Options) {
-  console.log(options)
   options.patch 
     ? await patchBabelParser()
     : await startServer(options)
