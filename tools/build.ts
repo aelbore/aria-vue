@@ -23,7 +23,8 @@ import { builtinModules } from 'module'
         copy({
           targets: [
             { src: './src/*.html', dest: 'dist' },
-            { src: 'bin/*', dest: 'dist/bin', replace }
+            { src: 'bin/*', dest: 'dist/bin', replace },
+            { src: './tools/parser/*', dest: './dist/tools/parser' }
           ]
         })
       ],

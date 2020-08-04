@@ -53,6 +53,7 @@ export async function setup() {
   await Promise.all(specs)
 
   const run = () => {
+    mocha.setup({ reporter: 'spec' })
     mocha.checkLeaks()
     mocha.run()
   }
