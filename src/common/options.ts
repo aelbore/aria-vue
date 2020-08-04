@@ -8,6 +8,7 @@ export interface Options {
   html?: string,
   watch?: boolean
   hostname?: string
+  patch?: boolean
 }
 
 export interface WatchOptions extends Pick<

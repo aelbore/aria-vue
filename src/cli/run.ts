@@ -1,6 +1,7 @@
 
 import { startServer } from './server'
 import { Options } from '../common/options'
+import { patchBabelParser } from '../patch/index'
 
 export async function run({ version, name }) {
   const prog = require('sade')(name, true)
@@ -13,6 +14,7 @@ export async function run({ version, name }) {
     .option('--script', 'scripts or helper scripts to load before setup')
     .option('--path', 'virtual path for your html reporter')
     .option('--html', 'path of your index.html file')
+    .option('--patch', 'feature toggle or patch issues', false)
     .example('--headless --script ./test/plugin.js')
     .example('--watch --path my-virtual-path --script ./test/plugin.js')
     .example('--path test-ui --html ./test/index.html --script ./test/plugins.js')
@@ -21,5 +23,8 @@ export async function run({ version, name }) {
 }
 
 export async function handler(options: Options) {
-  await startServer(options)
+  console.log(options)
+  options.patch 
+    ? await patchBabelParser()
+    : await startServer(options)
 }

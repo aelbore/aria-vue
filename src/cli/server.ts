@@ -5,6 +5,8 @@ import { Options } from '../common/options'
 import { normalizeOptions, createUrl } from '../common/common'
 import { testPlugin, watchPlugin } from '../plugins/plugins'
 
+import { patchConfig } from '../patch/index'
+
 async function launchHeadless({ hostname, port, path, watch }) {
   await launch(createUrl({ hostname, port, path }))
   !watch && process.exit()
@@ -31,9 +33,7 @@ export async function startServer(options: Options, config?: ServerConfig) {
     ...(config ?? {}), 
     port, 
     configureServer,
-    alias: {
-      '@babel/parser': '@babel/parser/index'
-    }
+    ...patchConfig()
   })
 
   server.listen(port, hostname, async () => {

@@ -4,6 +4,7 @@
   "description": "Example code for testing in vue",
   "main": "index.js",
   "scripts": {
+    "fixed": "npm run aria-vue -- --patch",
     "aria-vue": "node ./node_modules/aria-vue/bin/aria-vue.js",
     "dev": "vite",
     "build": "vite build",
