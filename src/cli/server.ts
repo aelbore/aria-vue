@@ -1,45 +1,26 @@
 import { launch } from 'aria-mocha'
-import { ServerConfig } from 'vite'
 
 import { Options } from '../common/options'
 import { normalizeOptions, createUrl } from '../common/common'
-import { testPlugin, watchPlugin } from '../plugins/plugins'
-
-import { patchConfig } from '../patch/index'
+import { createVueTestPlugin } from '../plugins/plugins'
 
 async function launchHeadless({ hostname, port, path, watch }) {
   await launch(createUrl({ hostname, port, path }))
-  !watch && process.exit()
+  ;(!watch && process.exit())
 }
 
-export async function startServer(options: Options, config?: ServerConfig) {
-  const { port, headless, path, watch, html } = normalizeOptions(options)
-
-  const hostname = 'localhost'
-  
-  const configureServer = [
-    ...(config?.configureServer 
-          ? Array.isArray(config?.configureServer)
-              ? config?.configureServer: [ config?.configureServer ]
-          : []),
-    testPlugin({ ...options, html }),
-    ...(watch 
-         ? [ watchPlugin({ port, headless, path, hostname }) ]
-         : [])
-  ]
+export async function startServer(options: Options) {
+  const opts = normalizeOptions(options)
   
   const { createServer } = await import('vite')
-  const server = createServer({ 
-    ...(config ?? {}), 
-    port, 
-    configureServer,
-    ...patchConfig()
-  })
 
+  const vueTestPlugin = createVueTestPlugin(opts)
+  const server = createServer(vueTestPlugin)
+
+  const { port, headless, hostname, html } = opts
   server.listen(port, hostname, async () => {
     headless 
-      && await launchHeadless({ hostname, port, path: html, watch }) 
-    !headless 
-      && console.log(`Go to ${createUrl({ hostname, port, path })}`)  
+      ? await launchHeadless({ ...opts, path: html }) 
+      : console.log(`Go to ${createUrl(opts)}`)
   })
 }

@@ -13,7 +13,6 @@ export const createUrl = ({ port, hostname, path }) =>
 
 export function normalizeOptions(options: Options) {
     const { 
-      patch = false,
       script,
       headless = false,
       watch = false,
@@ -24,5 +23,5 @@ export function normalizeOptions(options: Options) {
       html = removeBacklash('/node_modules/aria-vue/index.html')
     } = options
   
-    return { script, patch, watch, hostname, headless, port, dir, path, html }
+    return { script, watch, hostname, headless, port, dir, path, html }
   }

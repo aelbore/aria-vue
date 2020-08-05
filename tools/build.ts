@@ -5,17 +5,19 @@ import { builtinModules } from 'module'
   const pkg = require('../package.json')
 
   const external = [
+    'sade',
     ...Object.keys(pkg.dependencies),
     ...Object.keys(pkg.peerDependencies),
     ...Object.keys(pkg.devDependencies),
-    ...builtinModules,
-    'rollup',
-    '@rollup/plugin-node-resolve',
-    '@rollup/plugin-commonjs'
+    ...builtinModules
   ]
 
   function replace(filename: string) {
-    return replaceContent({ filename, strToFind: '../src',  strToReplace: '../aria-vue' })
+    return replaceContent({ 
+      filename, 
+      strToFind: '../src',  
+      strToReplace: '../aria-vue' 
+    })
   }
 
   const config: TSRollupConfig[] = [
@@ -26,8 +28,7 @@ import { builtinModules } from 'module'
         copy({
           targets: [
             { src: './src/*.html', dest: 'dist' },
-            { src: 'bin/*', dest: 'dist/bin', replace },
-            { src: './tools/*.js', dest: './dist/tools' }
+            { src: 'bin/*', dest: 'dist/bin', replace }
           ]
         })
       ],
@@ -47,14 +48,6 @@ import { builtinModules } from 'module'
         compilerOptions: {
           declaration: true
         }
-      }
-    },
-    {
-      input: './tools/babel-parser.js',
-      output: {
-        file: './node_modules/@babel/parser/index.js',
-        format: 'es',
-        sourcemap: true
       }
     }
   ]

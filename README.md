@@ -46,18 +46,14 @@ Plugin usage
 ------------
 * Create `vite.config.test.js` file
 ```javascript
-const { testPlugin, watchPlugin } = require('aria-vue')
+import { createVueTestPlugin } from 'aria-vue'
 
-/// by default (watchPlugin)
-/// all the files in src and test folder 
-/// with .spec.js and .vue extension will watch for change
-
-module.exports = {
-  configureServer: [
-    testPlugin({   
-      script: './test/plugins.js'
-    }),
-    watchPlugin()
+export default  {
+  plugins: [  
+    createVueTestPlugin({
+      script: './test/plugins.js',
+      watch: true
+    })
   ]
 }
 ```
