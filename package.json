@@ -1,13 +1,12 @@
 {
   "name": "aria-vue",
-  "version": "0.4.1-beta.0",
+  "version": "0.4.1-beta.4",
   "description": "Simple testing tools for vuejs",
   "main": "aria-vue.js",
   "bin": {
     "aria-vue": "./bin/aria-vue.js"
   },
   "scripts": {
-    "prepare": "node ./tools/patch.js",
     "build": "ts-node --project ./tools/tsconfig.json ./tools/build.ts"
   },
   "repository": {

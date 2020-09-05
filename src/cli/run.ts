@@ -1,7 +1,9 @@
 import { startServer } from './server'
 import { Options } from '../common/options'
+import { existsSync } from 'fs'
 
 import sade from 'sade'
+import { patchBabelParser } from '../optimize'
 
 export async function run({ version, name }) {
   const prog = sade(name, true)
@@ -22,5 +24,8 @@ export async function run({ version, name }) {
 }
 
 export async function handler(options: Options) {
+  if (!(existsSync('./node_modules/@babel/parser/index.js'))) {
+    await patchBabelParser()
+  }
   await startServer(options)
 }

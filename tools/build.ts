@@ -4,14 +4,6 @@ import { builtinModules } from 'module'
 (async function() {
   const pkg = require('../package.json')
 
-  async function addPostInstall() {
-    const json = require('../dist/package.json')
-    json.scripts = {  
-      "prepare": "node ./node_modules/aria-vue/tools/patch.js"
-    }
-    await writeFile('./dist/package.json', JSON.stringify(json, null, 2))
-  }
-
   const external = [
     'sade',
     ...Object.keys(pkg.dependencies),
@@ -66,7 +58,6 @@ import { builtinModules } from 'module'
   
   await clean('dist')
   await bundle({ config, esbuild: true, write: true })
-  await addPostInstall()
   await Promise.all([
     symlinkDir('./node_modules', './example/node_modules'),
     symlinkDir('./dist', './node_modules/aria-vue')
