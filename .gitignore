@@ -2,3 +2,5 @@ node_modules
 dist
 .tmp
 .DS_Stores
+.envrc
+default.nix

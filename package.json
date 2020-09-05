@@ -1,12 +1,13 @@
 {
   "name": "aria-vue",
-  "version": "0.4.1",
+  "version": "0.4.1-beta.0",
   "description": "Simple testing tools for vuejs",
   "main": "aria-vue.js",
   "bin": {
     "aria-vue": "./bin/aria-vue.js"
   },
   "scripts": {
+    "prepare": "node ./tools/patch.js",
     "build": "ts-node --project ./tools/tsconfig.json ./tools/build.ts"
   },
   "repository": {
@@ -41,7 +42,7 @@
     "@vue/test-utils": "^2.0.0-beta.3",
     "aria-build": "^0.5.2",
     "aria-fs": "^0.5.2",
-    "aria-mocha": "^0.5.1",
+    "aria-mocha": "^0.5.2",
     "puppeteer": "^5.2.1",
     "typescript": "^4.0.2",
     "vite": "^1.0.0-rc.4",

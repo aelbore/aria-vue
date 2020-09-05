@@ -1,15 +1,26 @@
-import { bundle, clean, TSRollupConfig, copy, replaceContent, symlinkDir } from 'aria-build'
+import { bundle, clean, TSRollupConfig, copy, replaceContent, symlinkDir, writeFile } from 'aria-build'
 import { builtinModules } from 'module'
 
 (async function() {
   const pkg = require('../package.json')
+
+  async function addPostInstall() {
+    const json = require('../dist/package.json')
+    json.scripts = {  
+      "prepare": "node ./node_modules/aria-vue/tools/patch.js"
+    }
+    await writeFile('./dist/package.json', JSON.stringify(json, null, 2))
+  }
 
   const external = [
     'sade',
     ...Object.keys(pkg.dependencies),
     ...Object.keys(pkg.peerDependencies),
     ...Object.keys(pkg.devDependencies),
-    ...builtinModules
+    ...builtinModules,
+    'rollup',
+    '@rollup/plugin-node-resolve',
+    '@rollup/plugin-commonjs'
   ]
 
   function replace(filename: string) {
@@ -28,7 +39,8 @@ import { builtinModules } from 'module'
         copy({
           targets: [
             { src: './src/*.html', dest: 'dist' },
-            { src: 'bin/*', dest: 'dist/bin', replace }
+            { src: 'bin/*', dest: 'dist/bin', replace },
+            { src: './tools/*.js', dest: './dist/tools' }
           ]
         })
       ],
@@ -54,6 +66,7 @@ import { builtinModules } from 'module'
   
   await clean('dist')
   await bundle({ config, esbuild: true, write: true })
+  await addPostInstall()
   await Promise.all([
     symlinkDir('./node_modules', './example/node_modules'),
     symlinkDir('./dist', './node_modules/aria-vue')
