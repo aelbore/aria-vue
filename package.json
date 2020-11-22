@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/aelbore/aria-vue#readme",
   "peerDependencies": {
-    "aria-mocha": ">=0.5.2",
+    "aria-mocha": ">=0.6.0",
     "vite": ">=1.0.0-rc.9"
   },
   "devDependencies": {
@@ -39,9 +39,9 @@
     "@types/sade": "^1.7.2",
     "@vue/compiler-sfc": "^3.0.2",
     "@vue/test-utils": "^2.0.0-beta.10",
-    "aria-build": "^0.5.2",
-    "aria-fs": "^0.5.2",
-    "aria-mocha": "^0.5.2",
+    "aria-build": "^0.6.0",
+    "aria-fs": "^0.6.0",
+    "aria-mocha": "^0.6.0",
     "puppeteer": "^5.5.0",
     "typescript": "^4.1.2",
     "vite": "^1.0.0-rc.9",
