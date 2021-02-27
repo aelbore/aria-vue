@@ -4,6 +4,9 @@
 # aria-vue
 Simple testing tools for vuejs
 
+# Note:
+If you are using Vite 2.x, Please check https://github.com/aelbore/vite-plugin-test
+
 Installation
 ------------
   ```
